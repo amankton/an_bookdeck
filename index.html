@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,22 +13,38 @@
             font-family: 'Montserrat', sans-serif;
             background-color: #f8f5f0;
             color: #333;
+            position: relative; /* Needed for scrollspy */
+            padding-left: 50px; /* Space for fixed nav */
         }
 
-        .slide {
-            min-height: 100vh;
-            height: 100vh; /* Fixed height for consistent slides */
+        /* Removed .slide styles */
+        section { /* Style sections directly */
+            min-height: 80vh; /* Use min-height for spacing, allow content to define actual height */
             padding: 5rem 2rem;
             position: relative;
-            overflow-y: auto;
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
+            justify-content: center; /* Center content vertically in section */
         }
 
         @media (max-width: 768px) {
-            .slide {
-                padding: 2rem 1rem;
+            body {
+                padding-left: 0; /* No space needed on mobile */
+            }
+            section {
+                padding: 3rem 1rem;
+                min-height: auto; /* Let content dictate height on mobile */
+            }
+            #progress-nav {
+                display: none; /* Hide sidebar nav on mobile */
+            }
+            #back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
             }
         }
 
@@ -41,48 +57,30 @@
             color: #c5a059;
         }
 
-        .bg-pattern {
+        .bg-pattern { /* Optional: Can still use as subtle background if desired */
             background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2IiBoZWlnaHQ9IjYiPgo8cmVjdCB3aWR0aD0iNiIgaGVpZ2h0PSI2IiBmaWxsPSIjZmZmIj48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDBMNiA2IiBzdHJva2U9IiNlZGU5ZTYiIHN0cm9rZS13aWR0aD0iMSI+PC9wYXRoPgo8cGF0aCBkPSJNNiAwTDAgNiIgc3Ryb2tlPSIjZWRlOWU2IiBzdHJva2Utd2lkdGg9IjEiPjwvcGF0aD4KPC9zdmc+');
             opacity: 0.1;
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             z-index: 0;
         }
 
-        .slide-content {
+        .section-content {
             position: relative;
             z-index: 1;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
             width: 100%;
             max-width: 100%;
         }
 
-        /* Responsive text sizes */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem !important;
-            }
-            h2 {
-                font-size: 1.75rem !important;
-            }
-            h3 {
-                font-size: 1.5rem !important;
-            }
-            .text-xl {
-                font-size: 1.1rem !important;
-            }
-            .text-lg {
-                font-size: 1rem !important;
-            }
-            .text-3xl {
-                font-size: 1.5rem !important;
-            }
-        }
+        /* Responsive text sizes (Tailwind handles much of this, but overrides can go here) */
+         @media (max-width: 768px) {
+             h1 { font-size: 2rem !important; }
+             h2 { font-size: 1.75rem !important; }
+             h3 { font-size: 1.5rem !important; }
+             .text-xl { font-size: 1.1rem !important; }
+             .text-lg { font-size: 1rem !important; }
+             .text-3xl { font-size: 1.5rem !important; }
+         }
 
         .logo {
             font-family: 'Playfair Display', serif;
@@ -93,11 +91,10 @@
         .package-card {
             transition: all 0.3s ease;
             border-top: 4px solid #c5a059;
-            height: 100%;
+            height: 100%; /* Ensure cards in a row have same height */
             display: flex;
             flex-direction: column;
         }
-
         .package-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
@@ -105,37 +102,20 @@
 
         /* Responsive grid adjustments */
         @media (max-width: 768px) {
-            .grid {
-                grid-template-columns: 1fr !important;
-            }
-
-            .gap-10, .gap-12, .gap-16 {
-                gap: 1.5rem !important;
-            }
-
-            .mb-16 {
-                margin-bottom: 2rem !important;
-            }
-
-            .p-8 {
-                padding: 1.5rem !important;
-            }
-
-            .space-x-12 {
-                margin-left: 0 !important;
-                margin-right: 0 !important;
-                display: flex;
-                flex-direction: column;
-                gap: 1rem;
-            }
+             .grid { grid-template-columns: 1fr !important; }
+             .gap-10, .gap-12, .gap-16 { gap: 1.5rem !important; }
+             .mb-16 { margin-bottom: 2rem !important; }
+             .p-8 { padding: 1.5rem !important; }
+             .space-x-12 { margin-left: 0 !important; margin-right: 0 !important; display: flex; flex-direction: column; gap: 1rem; }
         }
 
+        /* Revised Process Steps Styling */
         .process-step {
             position: relative;
-            padding-left: 3rem;
+            padding-left: 3rem; /* Space for the number */
+            margin-bottom: 2rem; /* Add spacing between steps */
         }
-
-        .process-step:before {
+        .process-step-number {
             content: "";
             position: absolute;
             left: 0;
@@ -149,480 +129,528 @@
             justify-content: center;
             color: white;
             font-weight: bold;
+            font-family: 'Montserrat', sans-serif; /* Match body font */
+            font-size: 1rem;
         }
 
-        .process-step:nth-child(1):before { content: "1"; }
-        .process-step:nth-child(2):before { content: "2"; }
-        .process-step:nth-child(3):before { content: "3"; }
-        .process-step:nth-child(4):before { content: "4"; }
-
-        .benefit-item {
-            position: relative;
-            padding-left: 2.5rem;
-            text-align: left;
+        /* Progress Navigation (Sidebar) */
+        #progress-nav {
+            position: fixed;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
-
-        .benefit-item:before {
-            content: "✓";
+        #progress-nav a {
+            width: 12px;
+            height: 12px;
+            background-color: #ccc;
+            border-radius: 50%;
+            display: block;
+            transition: background-color 0.3s ease;
+            position: relative; /* For tooltip */
+        }
+        #progress-nav a:hover,
+        #progress-nav a.active {
+            background-color: #c5a059; /* Gold accent */
+        }
+        /* Optional: Tooltip for nav dots */
+        #progress-nav a::after {
+            content: attr(data-tooltip);
             position: absolute;
-            left: 0;
-            top: 0.25rem;
-            color: #c5a059;
-            font-weight: bold;
-            font-size: 1.25rem;
+            left: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #333;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
         }
+        #progress-nav a:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+
+
+        /* Back to Top Button */
+        #back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: #c5a059;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            text-decoration: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.3s ease;
+            z-index: 1000;
+        }
+        #back-to-top:hover {
+            background-color: #a0824a; /* Darker gold */
+        }
+        #back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
     </style>
 </head>
-<body>
-    <!-- Slide 1: Cover -->
-    <div class="slide bg-white">
-        <div class="bg-pattern"></div>
-        <div class="slide-content container mx-auto max-w-6xl">
-            <div class="flex justify-between items-center mb-16">
-                <div class="logo text-2xl">ARISE <span class="gold-accent">PR</span> + <strong>NFLUENCY</strong></div>
-                <div class="text-sm uppercase tracking-widest">Confidential</div>
-            </div>
+<body data-bs-spy="scroll" data-bs-target="#progress-nav" data-bs-offset="150">
 
-            <div class="max-w-4xl mx-auto text-center mt-24">
-                <h1 class="text-5xl font-bold mb-6">Pitch Deck for Book Deal</h1>
-                <p class="text-xl mb-12 max-w-2xl mx-auto leading-relaxed">
-                    We create pitch decks with details to secure most advantageous book deal for clients with best terms and highest advance from book publisher
+    <nav id="progress-nav">
+        <a href="#intro" data-tooltip="Intro"></a>
+        <a href="#services" data-tooltip="Services"></a>
+        <a href="#includes" data-tooltip="Includes"></a>
+        <a href="#materials" data-tooltip="Materials"></a>
+        <a href="#pricing" data-tooltip="Pricing"></a>
+        <a href="#process" data-tooltip="Process"></a>
+        <a href="#contact" data-tooltip="Contact"></a>
+    </nav>
+
+    <a href="#intro" id="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <section id="intro" class="bg-white">
+        <div class="bg-pattern"></div>
+        <div class="section-content container mx-auto max-w-6xl">
+            <div class="flex justify-between items-center mb-8 md:mb-16">
+                <div class="logo text-xl md:text-2xl">ARISE <span class="gold-accent">PR</span> + <strong>NFLUENCY</strong></div>
+                </div>
+
+            <div class="max-w-4xl mx-auto text-center my-12 md:my-24">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6">Land Your Ideal Book Deal</h1>
+                <p class="text-lg md:text-xl mb-10 md:mb-12 max-w-2xl mx-auto leading-relaxed">
+                    We craft compelling, data-driven pitch decks designed to secure the best terms and highest advance from the right publisher for your story.
                 </p>
 
                 <div class="mt-8 mb-12">
-                    <h2 class="text-2xl font-bold mb-4">ArisePR.com</h2>
-                    <p class="text-lg max-w-3xl mx-auto">
-                        A public relations and marketing company that provides the most meticulous and lucrative pitch deck. We will match the author with a publisher that aligns with the preferred style and vision for the book, ensuring the best possible fit to accommodate language or distribution needs for publishing
+                    <h2 class="text-xl md:text-2xl font-bold mb-4"><a href="https://www.arisepr.com/" target="_blank" class="hover:text-gold-accent transition-colors">ArisePR.com</a> + <a href="https://www.nfluency.com/" target="_blank" class="hover:text-gold-accent transition-colors">NFLUENCY</a></h2>
+                    <p class="text-base md:text-lg max-w-3xl mx-auto">
+                        A partnership combining public relations expertise with creative strategy to deliver meticulous pitch packages. We connect authors with publishers aligned with their vision, ensuring the perfect fit for style, language, and distribution needs.
                     </p>
                 </div>
             </div>
 
-            <div class="text-center text-sm text-gray-500 mt-auto pt-12">
-                Presented by ArisePR.com, powered by <strong>NFLUENCY</strong>
+            <div class="text-center text-sm text-gray-500 mt-auto pt-8 md:pt-12">
+                 </div>
+        </div>
+    </section>
+
+    <section id="services" class="bg-gray-50">
+        <div class="section-content container mx-auto max-w-5xl">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 md:mb-16 text-center">Our Approach to Your Success</h2>
+
+            <div class="bg-white p-6 md:p-8 rounded-lg shadow-sm max-w-4xl mx-auto mb-10 md:mb-12">
+                <h3 class="text-xl md:text-2xl font-bold mb-6 text-center gold-accent">Pitch Deck & Proposal Crafting</h3>
+                <p class="text-base md:text-lg mb-6">
+                    We create a high-quality, customized pitch deck and proposal package specifically designed to secure a traditional book deal. We focus on showcasing your book's unique value, marketability, and potential impact to publishers.
+                </p>
+                 <p class="text-base md:text-lg">
+                     Beyond the deck, we develop a compelling 10-page writing sample (synopsis or excerpt) and a detailed chapter outline to give publishers a tangible preview of your work and story's magnitude.
+                 </p>
+            </div>
+
+            <div class="bg-white p-6 md:p-8 rounded-lg shadow-sm max-w-4xl mx-auto">
+                <h3 class="text-xl md:text-2xl font-bold mb-6 text-center gold-accent">Publisher Matching & Strategy</h3>
+                 <p class="text-base md:text-lg mb-6">
+                    Finding the right home for your book is crucial. We leverage our industry knowledge to identify and target publishers whose focus, style, and distribution capabilities align perfectly with your manuscript and goals.
+                </p>
+                <p class="text-base md:text-lg">
+                    Our service extends to strategic advice on positioning your book in the market and preparing for submission. For certain packages, we facilitate introductions to literary agents.
+                 </p>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Slide 2: Comprehensive Pitch Deck Services -->
-    <div class="slide bg-gray-50">
-        <div class="slide-content container mx-auto">
-            <h2 class="text-4xl font-bold mb-16 text-center">Comprehensive Pitch Deck Services</h2>
+    <section id="includes" class="bg-white">
+        <div class="section-content container mx-auto max-w-5xl">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 md:mb-16 text-center">What Your Pitch Deck Contains</h2>
 
-            <div class="bg-white p-8 rounded-lg shadow-sm max-w-4xl mx-auto mb-12">
-                <h3 class="text-2xl font-bold mb-6 text-center gold-accent">🔷 Scope of Work</h3>
-                <p class="text-lg mb-6">
-                    We will create a high-quality pitch deck tailored for securing a book deal. The pitch deck will be designed to showcase the book's value, marketability, and potential impact, including key elements such as:
-                </p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-8 max-w-4xl mx-auto px-4 mb-12">
+                <div class="space-y-6">
                     <div class="flex items-start">
-                        <i class="fas fa-check gold-accent mr-2 mt-1"></i>
-                        <span>Executive Summary</span>
-                    </div>
-                    <div class="flex items-start">
-                        <i class="fas fa-check gold-accent mr-2 mt-1"></i>
-                        <span>Market Analysis & Audience Insights</span>
-                    </div>
-                    <div class="flex items-start">
-                        <i class="fas fa-check gold-accent mr-2 mt-1"></i>
-                        <span>Author Background & Credentials</span>
-                    </div>
-                    <div class="flex items-start">
-                        <i class="fas fa-check gold-accent mr-2 mt-1"></i>
-                        <span>Competitive Positioning</span>
-                    </div>
-                    <div class="flex items-start">
-                        <i class="fas fa-check gold-accent mr-2 mt-1"></i>
-                        <span>Financial Projections & Revenue Potential</span>
-                    </div>
-                    <div class="flex items-start">
-                        <i class="fas fa-check gold-accent mr-2 mt-1"></i>
-                        <span>Visual Design & Branding</span>
-                    </div>
-                    <div class="flex items-start">
-                        <i class="fas fa-check gold-accent mr-2 mt-1"></i>
-                        <span>Publishing & Distribution Strategy</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-white p-8 rounded-lg shadow-sm max-w-4xl mx-auto mb-12">
-                <h3 class="text-2xl font-bold mb-6 text-center gold-accent">🔷 Short Bio & 10-Page Synopsis</h3>
-                <p class="text-lg mb-6">
-                    A short bio is a concise yet compelling overview of the author's life events, achievements, and key moments that define their story. This will be expanded into a 10-page written document for publishers to review.
-                </p>
-                <p class="text-lg mb-6">
-                    Additionally, we will match the author with a publisher that aligns with the preferred style and vision for the book, ensuring the best possible fit for publication.
-                </p>
-            </div>
-
-            <div class="bg-white p-8 rounded-lg shadow-sm max-w-4xl mx-auto">
-                <h3 class="text-2xl font-bold mb-6 text-center gold-accent">Our Commitment</h3>
-                <p class="text-lg mb-6">
-                    We provide a pitch deck in addition to sample writing excerpts of potential books which will be 10 pages of compelling or notable time to give the publishing company an idea of the magnitude of the story.
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 3: Book Pitch Deck Includes -->
-    <div class="slide bg-white">
-        <div class="slide-content container mx-auto">
-            <h2 class="text-4xl font-bold mb-16 text-center">Book Pitch Deck Includes</h2>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 max-w-4xl mx-auto px-4 mb-12">
-                <div class="space-y-8">
-                    <div class="benefit-item">
-                        <h3 class="text-xl font-bold mb-2">Title page</h3>
-                        <p class="text-gray-600">With name of book or public figure and their occupation or titles</p>
-                    </div>
-
-                    <div class="benefit-item">
-                        <h3 class="text-xl font-bold mb-2">Executive Summary or short bio</h3>
-                        <p class="text-gray-600">Synopsis of their life story with concise yet compelling overview of the public figure's life events, achievements, and key elements</p>
-                    </div>
-
-                    <div class="benefit-item">
-                        <h3 class="text-xl font-bold mb-2">Chapters List</h3>
-                        <p class="text-gray-600">With title preferably with bullet points on notable life events or things each chapter will include</p>
-                    </div>
-
-                    <div class="benefit-item">
-                        <h3 class="text-xl font-bold mb-2">Market Analysis & Audience Insights</h3>
-                        <p class="text-gray-600">Detailed analysis of target audience and market potential</p>
-                    </div>
-
-                    <div class="benefit-item">
-                        <h3 class="text-xl font-bold mb-2">Public Figures Background & Credentials</h3>
-                        <p class="text-gray-600">Comprehensive overview of qualifications and background</p>
-                    </div>
-                </div>
-
-                <div class="space-y-8">
-                    <div class="benefit-item">
-                        <h3 class="text-xl font-bold mb-2">Competitive Positioning</h3>
-                        <p class="text-gray-600">Analysis of similar books and unique selling points</p>
-                    </div>
-
-                    <div class="benefit-item">
-                        <h3 class="text-xl font-bold mb-2">Social Media Reach</h3>
-                        <p class="text-gray-600">Across Multiple Platforms with clickable links to accounts on each platform with Impressions</p>
-                    </div>
-
-                    <div class="benefit-item">
-                        <h3 class="text-xl font-bold mb-2">Social Media Analytics</h3>
-                        <p class="text-gray-600">Detailed breakdown of demographics, including gender, age, location, and engagement metrics</p>
-                    </div>
-
-                    <div class="benefit-item">
-                        <h3 class="text-xl font-bold mb-2">Press slide</h3>
-                        <p class="text-gray-600">With clickable links to press, media blogs, news articles, interviews, and media coverage</p>
-                    </div>
-
-                    <div class="benefit-item">
-                        <h3 class="text-xl font-bold mb-2">Featured Images</h3>
-                        <p class="text-gray-600">One or two slides featuring images with other notable people, places, or things highlighting important moments</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-gray-50 p-8 rounded-lg shadow-sm max-w-4xl mx-auto mb-12">
-                <h3 class="text-2xl font-bold mb-6 text-center gold-accent">🔷 Social Media & Audience Reach</h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bg-white p-6 rounded-lg shadow-sm">
-                        <h4 class="font-bold mb-3 text-center">Social Media Following</h4>
-                        <p class="text-gray-600 text-center">
-                            A dedicated page displaying the author's total follower count across various platforms.
-                        </p>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow-sm">
-                        <h4 class="font-bold mb-3 text-center">Audience Analytics</h4>
-                        <p class="text-gray-600 text-center">
-                            A detailed breakdown of social media demographics, including gender, age, location, and engagement metrics.
-                        </p>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow-sm">
-                        <h4 class="font-bold mb-3 text-center">Impressions & Reach</h4>
-                        <p class="text-gray-600 text-center">
-                            A slide showcasing overall impressions, engagement rates, and content performance.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-gray-50 p-8 rounded-lg shadow-sm max-w-4xl mx-auto mb-12">
-                <h3 class="text-2xl font-bold mb-6 text-center gold-accent">🔷 Press, Articles, & Interviews</h3>
-                <p class="text-lg mb-6 text-center">
-                    A dedicated page with live links to press coverage, published articles, and interviews that feature the author.
-                </p>
-            </div>
-
-            <div class="bg-gray-50 p-8 rounded-lg shadow-sm max-w-4xl mx-auto">
-                <h3 class="text-2xl font-bold mb-6 text-center gold-accent">🔷 Notable Moments & Image Archive</h3>
-                <ul class="space-y-4 text-lg">
-                    <li class="flex items-start">
-                        <i class="fas fa-camera gold-accent mr-3 mt-1"></i>
-                        <span>One or two slides featuring three key photos of significant moments, highlighting individuals who can be included in the book.</span>
-                    </li>
-                    <li class="flex items-start">
-                        <i class="fas fa-cloud-upload-alt gold-accent mr-3 mt-1"></i>
-                        <span>A link to a Dropbox or platform containing all images available for publisher use in the book.</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 4: Materials Included -->
-    <div class="slide bg-gray-50">
-        <div class="slide-content container mx-auto">
-            <h2 class="text-4xl font-bold mb-16 text-center">Materials Included</h2>
-
-            <div class="max-w-4xl mx-auto">
-                <p class="text-lg mb-12">
-                    These materials include but are not limited to excerpt from potential book highlighting a challenge, triumph, tragedy, achievement, embarrassment, scandal, or memorable moment from a potential book approximately 10-15 pages. The pitch deck for the publishing company with the elements as described in the above slides including chapter titles with bullet points or short description of content. The outline of chapters will serve as the blueprint for the potential book.
-                </p>
-
-                <div class="bg-white p-8 rounded-lg shadow-sm">
-                    <h3 class="text-2xl font-bold mb-6 text-center gold-accent">Deliverables</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div class="text-center">
-                            <div class="text-3xl mb-4"><i class="fas fa-file-pdf gold-accent"></i></div>
-                            <div class="font-bold mb-2">Pitch Deck</div>
-                            <p class="text-sm text-gray-600">Professional presentation with all required elements</p>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-3xl mb-4"><i class="fas fa-book gold-accent"></i></div>
-                            <div class="font-bold mb-2">Sample Excerpt</div>
-                            <p class="text-sm text-gray-600">10-15 pages showcasing the book's potential</p>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-3xl mb-4"><i class="fas fa-list-alt gold-accent"></i></div>
-                            <div class="font-bold mb-2">Chapter Outline</div>
-                            <p class="text-sm text-gray-600">Detailed blueprint for the potential book</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 5: Pricing -->
-    <div class="slide bg-gray-900 text-white">
-        <div class="slide-content container mx-auto">
-            <h2 class="text-4xl font-bold mb-16 text-center gold-accent">Pricing</h2>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-6xl mx-auto">
-                <div class="package-card bg-gray-800 p-8 rounded-lg border-t-4 border-gold-500">
-                    <h3 class="text-2xl font-bold mb-4 gold-accent">Shopping Price</h3>
-                    <div class="text-3xl font-bold mb-6 text-white">$4,000</div>
-                    <p class="text-gray-300 mb-6">
-                        + signed shopping agreement for 10-20% of publishing deal secured by either party.
-                    </p>
-
-                    <div class="border-t border-gray-700 pt-6">
-                        <p class="text-gray-300 mb-4">
-                            This agreement grants the producer the exclusive right to shop the intellectual property to publishing companies, investors, and financiers for a limited period, typically 2 years.
-                        </p>
-                        <p class="text-gray-300">
-                            We will secure the most advantageous book deal with an established publishing company that is the right fit for each individual client.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="package-card bg-gray-800 p-8 rounded-lg border-t-4 border-gold-500">
-                    <h3 class="text-2xl font-bold mb-4 gold-accent">Industry Shopping</h3>
-                    <div class="text-3xl font-bold mb-6 text-white">$8,000</div>
-                    <p class="text-gray-300 mb-6">
-                        + 10-15% of any secured deal with comprehensive package focused on securing a traditional publishing deal.
-                    </p>
-
-                    <div class="border-t border-gray-700 pt-6">
-                        <h4 class="font-bold mb-3 text-white">Includes:</h4>
-                        <ul class="space-y-2 text-sm">
-                            <li class="flex items-start">
-                                <i class="fas fa-check gold-accent mr-2 mt-1"></i>
-                                <span class="text-gray-300">Publisher-ready materials</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check gold-accent mr-2 mt-1"></i>
-                                <span class="text-gray-300">Agent introductions</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check gold-accent mr-2 mt-1"></i>
-                                <span class="text-gray-300">Submission strategy</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="package-card bg-gray-800 p-8 rounded-lg border-t-4 border-gold-500">
-                    <h3 class="text-2xl font-bold mb-4 gold-accent">Executive Deck Only</h3>
-                    <div class="text-3xl font-bold mb-6 text-white">$15,000</div>
-                    <p class="text-gray-300 mb-6">
-                        Flat fee, no backend share. Premium buyout option with no backend participation.
-                    </p>
-
-                    <div class="border-t border-gray-700 pt-6">
-                        <h4 class="font-bold mb-3 text-white">Includes:</h4>
-                        <ul class="space-y-2 text-sm">
-                            <li class="flex items-start">
-                                <i class="fas fa-check gold-accent mr-2 mt-1"></i>
-                                <span class="text-gray-300">Full ownership of materials</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check gold-accent mr-2 mt-1"></i>
-                                <span class="text-gray-300">Unlimited usage rights</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check gold-accent mr-2 mt-1"></i>
-                                <span class="text-gray-300">Priority turnaround</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mt-12 bg-gray-800 p-6 rounded-lg max-w-4xl mx-auto text-center border-l-4 border-gold-500">
-                <p class="font-medium text-white">
-                    All packages include: <span class="gold-accent">Strategy session • 10–15 page excerpt • 1 round of revisions • Final pitch-ready delivery</span>
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 6: Next Steps -->
-    <div class="slide bg-gray-50">
-        <div class="slide-content container mx-auto">
-            <h2 class="text-4xl font-bold mb-16 text-center">Next Steps</h2>
-
-            <div class="max-w-4xl mx-auto">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
-                    <div>
-                        <div class="space-y-8">
-                            <div class="process-step">
-                                <h3 class="text-2xl font-bold mb-4">1. Approval</h3>
-                                <p class="text-gray-600">
-                                    Confirm acceptance of the estimate and pricing structure.
-                                </p>
-                            </div>
-
-                            <div class="process-step">
-                                <h3 class="text-2xl font-bold mb-4">2. Agreement</h3>
-                                <p class="text-gray-600">
-                                    Sign the shopping agreement if opting for the discounted rate.
-                                </p>
-                            </div>
-
-                            <div class="process-step">
-                                <h3 class="text-2xl font-bold mb-4">3. Deposit</h3>
-                                <p class="text-gray-600">
-                                    Make the initial payment to begin the project.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="space-y-8">
-                            <div class="process-step">
-                                <h3 class="text-2xl font-bold mb-4">4. Provide Information</h3>
-                                <p class="text-gray-600">
-                                    Provide information and files needed to complete pitch deck.
-                                </p>
-                            </div>
-
-                            <div class="process-step">
-                                <h3 class="text-2xl font-bold mb-4">5. Kick Start</h3>
-                                <p class="text-gray-600">
-                                    Start the process in the time frame agreed upon. Start pitching to publishing companies that meet the language, marketing, or style requirements of the client.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="mt-8 bg-white p-6 rounded-lg shadow-sm">
-                            <p class="text-gray-600 italic">
-                                *For additional charge clients can opt for press run about them writing a book to create interest and drive prices
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 7: Contact Information -->
-    <div class="slide bg-gray-900 text-white">
-        <div class="slide-content container mx-auto">
-            <h2 class="text-4xl font-bold mb-16 text-center gold-accent">Contact Information</h2>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 max-w-6xl mx-auto">
-                <div class="text-center">
-                    <div class="logo text-3xl mb-6">ARISE <span class="gold-accent">PR</span></div>
-                    <p class="text-gray-300 mb-8">Public Relations & Marketing</p>
-
-                    <div class="space-y-4">
+                        <i class="fas fa-check gold-accent mr-3 mt-1 text-lg"></i>
                         <div>
-                            <div class="text-sm uppercase tracking-widest mb-1 gold-accent">Primary Contact</div>
-                            <div class="text-xl">Adrienne Russo</div>
+                            <h3 class="text-lg md:text-xl font-bold mb-1">Title Page</h3>
+                            <p class="text-gray-600 text-sm md:text-base">Book title, author name, and relevant credentials/titles.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <i class="fas fa-check gold-accent mr-3 mt-1 text-lg"></i>
+                        <div>
+                            <h3 class="text-lg md:text-xl font-bold mb-1">Executive Summary / Synopsis</h3>
+                            <p class="text-gray-600 text-sm md:text-base">A concise, compelling overview of the book's core concept, story, and key themes.</p>
+                        </div>
+                    </div>
+                     <div class="flex items-start">
+                        <i class="fas fa-check gold-accent mr-3 mt-1 text-lg"></i>
+                        <div>
+                            <h3 class="text-lg md:text-xl font-bold mb-1">Author Background & Credentials</h3>
+                            <p class="text-gray-600 text-sm md:text-base">Highlighting your expertise, platform, and unique qualifications to write this book.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <i class="fas fa-check gold-accent mr-3 mt-1 text-lg"></i>
+                        <div>
+                            <h3 class="text-lg md:text-xl font-bold mb-1">Detailed Chapter Outline</h3>
+                            <p class="text-gray-600 text-sm md:text-base">Chapter titles with summaries outlining the book's structure and content flow.</p>
+                        </div>
+                    </div>
+                     <div class="flex items-start">
+                        <i class="fas fa-check gold-accent mr-3 mt-1 text-lg"></i>
+                        <div>
+                            <h3 class="text-lg md:text-xl font-bold mb-1">Market Analysis & Target Audience</h3>
+                            <p class="text-gray-600 text-sm md:text-base">Identifying the primary readers and the book's potential reach within the market.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                     <div class="flex items-start">
+                        <i class="fas fa-check gold-accent mr-3 mt-1 text-lg"></i>
+                        <div>
+                            <h3 class="text-lg md:text-xl font-bold mb-1">Competitive Title Analysis</h3>
+                            <p class="text-gray-600 text-sm md:text-base">Positioning your book against similar titles, highlighting unique selling points.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <i class="fas fa-check gold-accent mr-3 mt-1 text-lg"></i>
+                        <div>
+                            <h3 class="text-lg md:text-xl font-bold mb-1">Platform & Reach Summary</h3>
+                            <p class="text-gray-600 text-sm md:text-base">Overview of your social media following, website traffic, mailing list size, etc.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <i class="fas fa-check gold-accent mr-3 mt-1 text-lg"></i>
+                        <div>
+                            <h3 class="text-lg md:text-xl font-bold mb-1">Audience Demographics & Analytics</h3>
+                            <p class="text-gray-600 text-sm md:text-base">Detailed breakdown (gender, age, location, engagement) where available.</p>
+                        </div>
+                    </div>
+                     <div class="flex items-start">
+                        <i class="fas fa-check gold-accent mr-3 mt-1 text-lg"></i>
+                        <div>
+                            <h3 class="text-lg md:text-xl font-bold mb-1">Press & Media Highlights</h3>
+                            <p class="text-gray-600 text-sm md:text-base">Links to significant press coverage, interviews, articles, or media appearances.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <i class="fas fa-check gold-accent mr-3 mt-1 text-lg"></i>
+                        <div>
+                            <h3 class="text-lg md:text-xl font-bold mb-1">Visuals & Image Links</h3>
+                            <p class="text-gray-600 text-sm md:text-base">Key images showcasing notable moments, plus links to an image archive for publisher use.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-10">
+                 <p class="text-gray-700 italic text-sm md:text-base max-w-3xl mx-auto">This comprehensive approach ensures publishers have everything they need to evaluate your book's potential and make an informed decision.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="materials" class="bg-gray-50">
+        <div class="section-content container mx-auto max-w-4xl">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 md:mb-16 text-center">Your Deliverable Package</h2>
+
+            <div class="max-w-4xl mx-auto">
+                <p class="text-base md:text-lg mb-10 md:mb-12 text-center">
+                    Upon completion, you will receive a polished, professional package ready for publisher submissions, including these key components:
+                </p>
+
+                <div class="bg-white p-6 md:p-8 rounded-lg shadow-sm">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="text-center border-r border-gray-200 md:border-r pr-4">
+                            <div class="text-4xl mb-4"><i class="fas fa-file-pdf gold-accent"></i></div>
+                            <div class="font-bold text-lg md:text-xl mb-2">Pitch Deck</div>
+                            <p class="text-sm md:text-base text-gray-600">A visually compelling presentation containing all essential elements outlined previously.</p>
+                        </div>
+                        <div class="text-center border-r border-gray-200 md:border-r pr-4">
+                            <div class="text-4xl mb-4"><i class="fas fa-book-open gold-accent"></i></div>
+                            <div class="font-bold text-lg md:text-xl mb-2">Sample Excerpt/Synopsis</div>
+                            <p class="text-sm md:text-base text-gray-600">Approx. 10 pages showcasing your writing style and story potential (memoir synopsis or fiction excerpt).</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-4xl mb-4"><i class="fas fa-list-alt gold-accent"></i></div>
+                            <div class="font-bold text-lg md:text-xl mb-2">Detailed Chapter Outline</div>
+                            <p class="text-sm md:text-base text-gray-600">The blueprint for your book, detailing the content and flow of each chapter.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="bg-gray-900 text-white">
+        <div class="section-content container mx-auto max-w-6xl">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 md:mb-16 text-center gold-accent">Investment Options</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+                <div class="package-card bg-gray-800 p-6 md:p-8 rounded-lg">
+                    <h3 class="text-xl md:text-2xl font-bold mb-4 gold-accent">Foundation Package</h3>
+                    <div class="text-2xl md:text-3xl font-bold mb-6 text-white">$4,000</div>
+                    <p class="text-gray-300 mb-6 text-sm md:text-base">
+                        + Signed Shopping Agreement (10-20% of publisher deal secured by either party within agreement term).
+                    </p>
+                    <div class="border-t border-gray-700 pt-6 mt-auto">
+                        <p class="text-gray-300 mb-4 text-sm md:text-base">
+                            Includes full Pitch Deck, Sample Excerpt, and Chapter Outline creation. The shopping agreement grants us the exclusive right to pitch your project for a set period (typically 1-2 years), motivating our efforts to secure the best deal.
+                        </p>
+                         <p class="text-gray-400 text-xs italic">Ideal for authors wanting professional materials and motivated representation.</p>
+                    </div>
+                </div>
+
+                <div class="package-card bg-gray-800 p-6 md:p-8 rounded-lg border-t-4 border-blue-400" style="border-color: #60a5fa;"> <span class="text-xs uppercase tracking-wider font-semibold text-blue-400 mb-2 text-center">Recommended</span>
+                    <h3 class="text-xl md:text-2xl font-bold mb-4 gold-accent">Industry Outreach Package</h3>
+                    <div class="text-2xl md:text-3xl font-bold mb-6 text-white">$8,000</div>
+                    <p class="text-gray-300 mb-6 text-sm md:text-base">
+                        + 10-15% of secured publisher deal. Comprehensive package focused on proactive industry outreach.
+                    </p>
+                    <div class="border-t border-gray-700 pt-6 mt-auto">
+                        <h4 class="font-bold mb-3 text-white text-base">Includes Foundation Package plus:</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li class="flex items-start"><i class="fas fa-check gold-accent mr-2 mt-1"></i><span class="text-gray-300">Targeted publisher/agent list development</span></li>
+                            <li class="flex items-start"><i class="fas fa-check gold-accent mr-2 mt-1"></i><span class="text-gray-300">Strategic agent introductions & query support</span></li>
+                            <li class="flex items-start"><i class="fas fa-check gold-accent mr-2 mt-1"></i><span class="text-gray-300">Guided submission & negotiation strategy</span></li>
+                        </ul>
+                         <p class="text-gray-400 text-xs italic mt-4">Best for authors seeking hands-on support navigating the submission process.</p>
+                    </div>
+                </div>
+
+                <div class="package-card bg-gray-800 p-6 md:p-8 rounded-lg">
+                    <h3 class="text-xl md:text-2xl font-bold mb-4 gold-accent">Executive Deck Only</h3>
+                    <div class="text-2xl md:text-3xl font-bold mb-6 text-white">$15,000</div>
+                    <p class="text-gray-300 mb-6 text-sm md:text-base">
+                        Flat fee for complete materials creation with no backend participation required from us.
+                    </p>
+                     <div class="border-t border-gray-700 pt-6 mt-auto">
+                         <h4 class="font-bold mb-3 text-white text-base">Includes:</h4>
+                         <ul class="space-y-2 text-sm">
+                             <li class="flex items-start"><i class="fas fa-check gold-accent mr-2 mt-1"></i><span class="text-gray-300">Full ownership of all created materials</span></li>
+                             <li class="flex items-start"><i class="fas fa-check gold-accent mr-2 mt-1"></i><span class="text-gray-300">Unlimited usage rights for pitching</span></li>
+                              <li class="flex items-start"><i class="fas fa-check gold-accent mr-2 mt-1"></i><span class="text-gray-300">Priority project turnaround</span></li>
+                         </ul>
+                         <p class="text-gray-400 text-xs italic mt-4">Suited for authors or teams managing their own pitching process.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 bg-gray-800 p-4 md:p-6 rounded-lg max-w-4xl mx-auto text-center border-l-4 border-gold-500">
+                <p class="font-medium text-white text-sm md:text-base">
+                    All packages include: <span class="gold-accent">Initial Strategy Session • Research & Content Development • 1 Round of Revisions • Final Pitch-Ready Delivery</span>
+                </p>
+                 <p class="font-medium text-white text-xs md:text-sm mt-3">
+                    *Optional Add-on: Targeted press run to generate buzz pre-submission (Inquire for pricing).
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="process" class="bg-gray-50">
+        <div class="section-content container mx-auto max-w-5xl">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 md:mb-16 text-center">Getting Started: Our Process</h2>
+
+            <div class="max-w-4xl mx-auto">
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-8">
+                    <div>
+                        <div class="process-step">
+                             <span class="process-step-number">1</span>
+                            <h3 class="text-xl md:text-2xl font-bold mb-2">Consultation & Approval</h3>
+                            <p class="text-gray-600 text-sm md:text-base">Discuss your project, confirm the chosen package, and approve the estimate.</p>
+                        </div>
+                        <div class="process-step">
+                            <span class="process-step-number">2</span>
+                            <h3 class="text-xl md:text-2xl font-bold mb-2">Agreement & Deposit</h3>
+                            <p class="text-gray-600 text-sm md:text-base">Sign the service agreement (and shopping agreement if applicable). Submit initial deposit to commence work.</p>
+                        </div>
+                         <div class="process-step">
+                            <span class="process-step-number">3</span>
+                            <h3 class="text-xl md:text-2xl font-bold mb-2">Information Gathering</h3>
+                            <p class="text-gray-600 text-sm md:text-base">Provide necessary background materials, manuscript (if available), platform details, images, and complete our author questionnaire.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="process-step">
+                            <span class="process-step-number">4</span>
+                            <h3 class="text-xl md:text-2xl font-bold mb-2">Development & Review</h3>
+                             <p class="text-gray-600 text-sm md:text-base">We draft the pitch deck, excerpt, and outline. You review and provide feedback for one round of revisions.</p>
+                        </div>
+                         <div class="process-step">
+                             <span class="process-step-number">5</span>
+                            <h3 class="text-xl md:text-2xl font-bold mb-2">Final Delivery & Kick-Off</h3>
+                             <p class="text-gray-600 text-sm md:text-base">Receive your final, polished materials. If applicable (Industry Outreach package), we begin the strategic pitching process according to the agreed timeline.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="bg-gray-900 text-white">
+        <div class="section-content container mx-auto max-w-6xl">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 md:mb-16 text-center gold-accent">Let's Discuss Your Book</h2>
+
+            <div class="grid grid-cols-1 gap-12 md:gap-16 max-w-3xl mx-auto">
+
+                <div class="text-center">
+                    <div class="logo text-2xl md:text-3xl mb-4">ARISE <span class="gold-accent">PR</span></div>
+                    <p class="text-gray-400 mb-6 text-sm md:text-base">Public Relations & Marketing Strategy</p>
+                    <div class="space-y-3 text-sm md:text-base">
+                        <div>
+                            <div class="text-xs uppercase tracking-widest mb-1 gold-accent">Primary Contact</div>
+                            <div class="text-lg md:text-xl">Adrienne Russo</div>
                             <div>Executive Director</div>
                         </div>
                         <div>
-                            <div class="text-sm uppercase tracking-widest mb-1 gold-accent">Office</div>
-                            <div>646-417-2287</div>
+                            <div class="text-xs uppercase tracking-widest mb-1 gold-accent">Email</div>
+                            <div><a href="mailto:info@arisepr.com" class="hover:text-gold-accent transition-colors">info@arisepr.com</a></div>
                         </div>
                         <div>
-                            <div class="text-sm uppercase tracking-widest mb-1 gold-accent">Cell</div>
+                            <div class="text-xs uppercase tracking-widest mb-1 gold-accent">Office</div>
+                            <div>646-417-2287</div>
+                        </div>
+                         <div>
+                            <div class="text-xs uppercase tracking-widest mb-1 gold-accent">Cell</div>
                             <div>470-707-5673</div>
                         </div>
                         <div>
-                            <div class="text-sm uppercase tracking-widest mb-1 gold-accent">Email</div>
-                            <div>info@arisepr.com</div>
-                            <div>Adriennerussonyc@gmail.com</div>
-                        </div>
-                        <div>
-                            <div class="text-sm uppercase tracking-widest mb-1 gold-accent">Website</div>
-                            <div>https://www.arisepr.com/</div>
+                            <div class="text-xs uppercase tracking-widest mb-1 gold-accent">Website</div>
+                            <div><a href="https://www.arisepr.com/" target="_blank" class="hover:text-gold-accent transition-colors">www.arisepr.com</a></div>
                         </div>
                     </div>
                 </div>
 
-                <div class="text-center">
-                    <div class="logo text-3xl mb-6"><strong>NFLUENCY</strong></div>
-                    <p class="text-gray-300 mb-8">Creative Strategy & Visual Storytelling</p>
+                <div class="border-t border-gray-700 my-4 md:my-0"></div>
 
-                    <div class="space-y-4">
+                <div class="text-center">
+                    <div class="logo text-2xl md:text-3xl mb-4"><strong>NFLUENCY</strong></div>
+                    <p class="text-gray-400 mb-6 text-sm md:text-base">Creative Strategy & Visual Storytelling</p>
+                     <div class="space-y-3 text-sm md:text-base">
                         <div>
-                            <div class="text-sm uppercase tracking-widest mb-1 gold-accent">Contact</div>
-                            <div class="text-xl">AmonJamahal Ankton</div>
+                            <div class="text-xs uppercase tracking-widest mb-1 gold-accent">Primary Contact</div>
+                            <div class="text-lg md:text-xl">AmonJamahal Ankton</div>
+                             </div>
+                        <div>
+                            <div class="text-xs uppercase tracking-widest mb-1 gold-accent">Email</div>
+                            <div><a href="mailto:amon@nfluencehub.com" class="hover:text-gold-accent transition-colors">amon@nfluencehub.com</a></div>
                         </div>
                         <div>
-                            <div class="text-sm uppercase tracking-widest mb-1 gold-accent">Email</div>
-                            <div>amon@nfluencehub.com</div>
-                        </div>
-                        <div>
-                            <div class="text-sm uppercase tracking-widest mb-1 gold-accent">Phone</div>
+                            <div class="text-xs uppercase tracking-widest mb-1 gold-accent">Phone</div>
                             <div>(661) 502-7927</div>
                         </div>
                         <div>
-                            <div class="text-sm uppercase tracking-widest mb-1 gold-accent">Website</div>
-                            <div>www.nfluency.com</div>
+                            <div class="text-xs uppercase tracking-widest mb-1 gold-accent">Website</div>
+                            <div><a href="https://www.nfluency.com/" target="_blank" class="hover:text-gold-accent transition-colors">www.nfluency.com</a></div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="mt-16 max-w-3xl mx-auto text-center">
-                <div class="flex justify-center">
-                    <a href="#" class="bg-gold-500 hover:bg-gold-600 text-gray-900 font-bold py-3 px-6 rounded-full inline-flex items-center transition duration-300">
-                        <i class="fas fa-calendar-check mr-2"></i> Schedule Consultation
-                    </a>
-                </div>
+                <a href="#contact" class="bg-gold-500 hover:bg-opacity-80 text-gray-900 font-bold py-3 px-8 rounded-full inline-flex items-center transition duration-300 text-base md:text-lg" style="background-color: #c5a059;">
+                    <i class="fas fa-calendar-check mr-2"></i> Schedule Your Consultation
+                </a>
+                 <p class="text-gray-400 mt-4 text-sm">Click above or use the contact details to get started.</p>
             </div>
 
-            <div class="text-center text-xs text-gray-500 mt-16 pb-8">
-                &copy; 2023 ARISE PR + <strong>NFLUENCY</strong>. All rights reserved. Confidential and proprietary.
+            <div class="text-center text-xs text-gray-500 mt-16 pt-8 border-t border-gray-700">
+                &copy; 2025 ARISE PR + <strong>NFLUENCY</strong>. All rights reserved. Confidential and proprietary.
             </div>
         </div>
-    </div>
+    </section>
+
+    <script>
+        // Back to Top Button Logic
+        const backToTopButton = document.getElementById('back-to-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) { // Show button after scrolling 300px
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+
+        // Optional: Smooth scroll for all anchor links with hashes
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                // Don't prevent default if it's just '#'
+                if (this.getAttribute('href') === '#') return;
+
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+
+                if (targetElement) {
+                     // Optional: Calculate offset if you have a fixed header
+                     // const headerOffset = 70; // Example offset value
+                    // const elementPosition = targetElement.getBoundingClientRect().top;
+                    // const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    // window.scrollTo({
+                    //      top: offsetPosition,
+                    //      behavior: "smooth"
+                    // });
+
+                     // Simpler version without header offset:
+                     targetElement.scrollIntoView({
+                         behavior: 'smooth',
+                         block: 'start' // Aligns target element to the top
+                     });
+                }
+            });
+        });
+
+        // Progress Navigation Active State Logic (Simple Intersection Observer)
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('#progress-nav a');
+
+        const observerOptions = {
+            root: null, // relative to document viewport
+            rootMargin: '0px',
+            threshold: 0.4 // Trigger when 40% of the section is visible
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    // Remove active class from all links
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                         // Add active class to the matching link
+                        if (link.getAttribute('href') === `#${id}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+
+        // Observe each section
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+    </script>
+
 </body>
 </html>
