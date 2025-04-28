@@ -18,11 +18,18 @@
         .slide {
             min-height: 100vh;
             height: 100vh; /* Fixed height for consistent slides */
-            padding: 5rem;
+            padding: 5rem 2rem;
             position: relative;
-            overflow: hidden;
+            overflow-y: auto;
+            overflow-x: hidden;
             display: flex;
             flex-direction: column;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 2rem 1rem;
+            }
         }
 
         h1, h2, h3, h4 {
@@ -51,6 +58,30 @@
             flex: 1;
             display: flex;
             flex-direction: column;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        /* Responsive text sizes */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem !important;
+            }
+            h2 {
+                font-size: 1.75rem !important;
+            }
+            h3 {
+                font-size: 1.5rem !important;
+            }
+            .text-xl {
+                font-size: 1.1rem !important;
+            }
+            .text-lg {
+                font-size: 1rem !important;
+            }
+            .text-3xl {
+                font-size: 1.5rem !important;
+            }
         }
 
         .logo {
@@ -62,11 +93,41 @@
         .package-card {
             transition: all 0.3s ease;
             border-top: 4px solid #c5a059;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
         .package-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        /* Responsive grid adjustments */
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            .gap-10, .gap-12, .gap-16 {
+                gap: 1.5rem !important;
+            }
+
+            .mb-16 {
+                margin-bottom: 2rem !important;
+            }
+
+            .p-8 {
+                padding: 1.5rem !important;
+            }
+
+            .space-x-12 {
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
         }
 
         .process-step {
@@ -558,7 +619,7 @@
                 </div>
             </div>
 
-            <div class="absolute bottom-8 left-0 right-0 text-center text-xs text-gray-500">
+            <div class="text-center text-xs text-gray-500 mt-16 pb-8">
                 &copy; 2023 ARISE PR + <strong>NFLUENCY</strong>. All rights reserved. Confidential and proprietary.
             </div>
         </div>
